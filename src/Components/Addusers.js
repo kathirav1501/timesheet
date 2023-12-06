@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  IconButton,
   Typography,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
   TextField,
   FormControl,
   InputLabel,
@@ -16,11 +11,12 @@ import {
   Button,
   Grid,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+
 import MuiAlert from "@mui/material/Alert";
 import axios from "axios";
-import { Link } from "react-router-dom";
+
 import Sidebaradmin from "./Sidebaradmin";
+import CustomAppBar from "./CustomAppBar";
 
 const Addusers = () => {
   const [username, setUsername] = useState("");
@@ -32,7 +28,6 @@ const Addusers = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     // Fetch projects from API
@@ -109,34 +104,13 @@ const Addusers = () => {
     setSelectedProject(event.target.value);
   };
 
-  const handleFilterChange = (event) => {
-    setFilter(event.target.value);
-  };
-
   return (
-    <Box
-      sx={{
-        display: "flex",
-        minHeight: "100vh",
-        backgroundColor: "#f4f4f4",
-      }}
-    >
-      {/* Left top corner toggle icon */}
-      <IconButton
-        onClick={() => setIsDrawerOpen(true)}
-        size="small"
-        edge="start"
-        color="inherit"
-        aria-label="menu"
-        sx={{
-          position: "fixed",
-          top: 10,
-          left: 10,
-          zIndex: 9999,
-        }}
-      >
-        <MenuIcon />
-      </IconButton>
+    <div>
+      <CustomAppBar
+        toggleDrawer={toggleDrawer}
+        handleLogout={handleLogout}
+        title="Create User" // Pass the title as a prop
+      />
 
       <Sidebaradmin isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
 
@@ -149,15 +123,16 @@ const Addusers = () => {
           backgroundColor: "#fff",
           // Light background color
           border: "1px solid #ddd", // Light border color
-          borderRadius: 12, // Border radius
+          borderRadius: 5, // Border radius
           boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)", // Op
+          marginTop: "30px",
         }}
       >
-        <Typography variant="h4" align="center" gutterBottom>
-          Create User
+        <Typography variant="h6" align="left" gutterBottom>
+          Enter User Details
         </Typography>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+        <Grid container spacing={3.5}>
+          <Grid item xs={10} sm={6}>
             <TextField
               label="Username"
               value={username}
@@ -168,6 +143,15 @@ const Addusers = () => {
                 style: { backgroundColor: "#fff" },
               }}
             />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth size="small">
+              <InputLabel>Role</InputLabel>
+              <Select value={roleID} onChange={handleRoleChange}>
+                <MenuItem value={1}>Admin</MenuItem>
+                <MenuItem value={2}>User</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -195,15 +179,7 @@ const Addusers = () => {
               size="small"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth size="small">
-              <InputLabel>Role</InputLabel>
-              <Select value={roleID} onChange={handleRoleChange}>
-                <MenuItem value={1}>Admin</MenuItem>
-                <MenuItem value={2}>User</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+
           <Grid item xs={12} sm={12}>
             <FormControl fullWidth size="small">
               <InputLabel>Project</InputLabel>
@@ -227,7 +203,7 @@ const Addusers = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <Button
               variant="contained"
               onClick={handleCreateUser}
@@ -252,7 +228,7 @@ const Addusers = () => {
           </MuiAlert>
         </Snackbar>
       </Box>
-    </Box>
+    </div>
   );
 };
 

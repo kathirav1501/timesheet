@@ -38,8 +38,7 @@ const Sidebaradmin = ({ isDrawerOpen, toggleDrawer }) => {
         width: 250,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: 250,
-          borderRadius: "0 10px 10px 0", // Adjust border radius here
+          width: 195,
         },
       }}
     >

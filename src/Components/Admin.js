@@ -12,27 +12,20 @@ import {
   Box,
   Button,
   TablePagination,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
   MenuItem,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { Link } from "react-router-dom";
+
 import * as XLSX from "xlsx";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import Sidebaradmin from "./Sidebaradmin";
+import CustomAppBar from "./CustomAppBar";
 
 // ... StyledTableCell, StyledTableRow, TableContainerStyled, FilterContainer styles remain unchanged ...
 
 function Admin() {
   const [tableData, setTableData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [filter, setFilter] = useState("");
+  const [filter] = useState("");
   const [resourceFilter, setResourceFilter] = useState(""); // New state for resource filter
   const [currentPage, setCurrentPage] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -64,19 +57,6 @@ function Admin() {
   const getResourceNames = () => {
     const names = tableData.map((item) => item.userName);
     return Array.from(new Set(names));
-  };
-
-  const handleFilterChange = (event) => {
-    const keyword = event.target.value.toLowerCase();
-    setFilter(keyword);
-    const filtered = tableData.filter((item) =>
-      item.userName.toLowerCase().includes(keyword)
-    );
-    const filteredByResource = filtered.filter((item) =>
-      item.userName.toLowerCase().includes(resourceFilter.toLowerCase())
-    );
-    setFilteredData(filteredByResource);
-    setCurrentPage(0);
   };
 
   const handleResourceFilterChange = (event) => {
@@ -134,33 +114,11 @@ function Admin() {
 
   return (
     <div>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 2,
-          paddingRight: 2,
-        }}
-      >
-        {/* Header */}
-        <IconButton
-          onClick={toggleDrawer(true)}
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ marginRight: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h4" align="center" gutterBottom>
-          Resource Tasks
-        </Typography>
-        <IconButton onClick={handleLogout} color="inherit">
-          <LogoutIcon />
-        </IconButton>
-      </Box>
+      <CustomAppBar
+        toggleDrawer={toggleDrawer}
+        handleLogout={handleLogout}
+        title="Resource Tasks" // Pass the title as a prop
+      />
 
       {/* Sidebar */}
       <Sidebaradmin isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
@@ -174,25 +132,6 @@ function Admin() {
         }}
       >
         {/* Filter and Export Button */}
-        <TextField
-          select
-          label="Filter by Resource Name"
-          value={resourceFilter}
-          onChange={handleResourceFilterChange}
-          variant="outlined"
-          style={{ marginBottom: "2rem", width: "20%" }}
-          size="small"
-        >
-          {getResourceNames().map((name) => (
-            <MenuItem key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </TextField>
-
-        <Button variant="contained" onClick={exportToExcel}>
-          <FileDownloadIcon /> Export to Excel
-        </Button>
 
         {/* Table */}
         <Box
@@ -203,6 +142,29 @@ function Admin() {
             marginTop: 2,
           }}
         >
+          <TextField
+            select
+            label="Filter by Resource Name"
+            value={resourceFilter}
+            onChange={handleResourceFilterChange}
+            variant="outlined"
+            style={{ marginBottom: "2rem", width: "22%", marginLeft: "50px" }}
+            size="small"
+          >
+            {getResourceNames().map((name) => (
+              <MenuItem key={name} value={name}>
+                {name}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Button
+            size="small"
+            variant="outlined"
+            style={{ left: "53%" }}
+            onClick={exportToExcel}
+          >
+            <FileDownloadIcon /> Export to Excel
+          </Button>
           <TableContainer
             component={Paper}
             sx={{ maxWidth: "90%", margin: "auto" }}

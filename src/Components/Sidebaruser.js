@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
@@ -38,8 +38,7 @@ const Sidebaruser = ({ isDrawerOpen, toggleDrawer }) => {
         width: 250,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: 250,
-          borderRadius: "0 10px 10px 0", // Adjust border radius here
+          width: 195,
         },
       }}
     >

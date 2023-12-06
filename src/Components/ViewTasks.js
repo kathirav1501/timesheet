@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-  Container,
-  Typography,
   Box,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
   Table,
   TableContainer,
   TableHead,
@@ -18,10 +11,9 @@ import {
   TablePagination,
 } from "@mui/material";
 import axios from "axios";
-import MenuIcon from "@mui/icons-material/Menu";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { Link } from "react-router-dom";
+
 import Sidebaruser from "./Sidebaruser";
+import CustomAppBar from "./CustomAppBar";
 
 const ViewTasks = () => {
   const [userTasks, setUserTasks] = useState([]);
@@ -86,71 +78,57 @@ const ViewTasks = () => {
 
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 2,
-        }}
-      >
-        <IconButton
-          onClick={toggleDrawer(true)}
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h4" align="center" gutterBottom>
-          View Tasks
-        </Typography>
-        <IconButton onClick={handleLogout} color="inherit">
-          <LogoutIcon />
-        </IconButton>
-      </Box>
-      <Sidebaruser isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
+      <Box display="flex" flexDirection="column" alignItems="center">
+        <CustomAppBar
+          toggleDrawer={toggleDrawer}
+          handleLogout={handleLogout}
+          title="View Tasks" // Pass the title as a prop
+        />
+        <Sidebaruser isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
 
-      <TableContainer component={Paper}>
-        <Table size="small">
-          <TableHead>
-            <TableRow style={{ backgroundColor: "darkgrey", color: "white" }}>
-              <TableCell>Resource Name</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Project</TableCell>
-              <TableCell>Task</TableCell>
-              <TableCell>Hours</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {userTasks
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((task) => (
-                <TableRow key={task.taskID}>
-                  <TableCell>{task.userName}</TableCell>
-                  <TableCell>{formatDate(task.date)}</TableCell>
-                  <TableCell>{task.project.projectName}</TableCell>
-                  <TableCell>{task.taskName}</TableCell>
-                  <TableCell>{task.hoursSpent}</TableCell>
+        <Box width="80%" mt={4}>
+          <TableContainer component={Paper}>
+            <Table size="small">
+              <TableHead>
+                <TableRow
+                  style={{ backgroundColor: "darkgrey", color: "white" }}
+                >
+                  <TableCell>Resource Name</TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Project</TableCell>
+                  <TableCell>Task</TableCell>
+                  <TableCell>Hours</TableCell>
                 </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={userTasks.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={(e, newPage) => setPage(newPage)}
-        onRowsPerPageChange={(e) => {
-          setRowsPerPage(parseInt(e.target.value, 10));
-          setPage(0);
-        }}
-      />
+              </TableHead>
+              <TableBody>
+                {userTasks
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((task) => (
+                    <TableRow key={task.taskID}>
+                      <TableCell>{task.userName}</TableCell>
+                      <TableCell>{formatDate(task.date)}</TableCell>
+                      <TableCell>{task.project.projectName}</TableCell>
+                      <TableCell>{task.taskName}</TableCell>
+                      <TableCell>{task.hoursSpent}</TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={userTasks.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={(e, newPage) => setPage(newPage)}
+            onRowsPerPageChange={(e) => {
+              setRowsPerPage(parseInt(e.target.value, 10));
+              setPage(0);
+            }}
+          />
+        </Box>
+      </Box>
     </>
   );
 };

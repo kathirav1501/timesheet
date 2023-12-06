@@ -5,14 +5,11 @@ import {
   Checkbox,
   Grid,
   Paper,
-  Avatar,
   TextField,
   Button,
-  Typography,
   Box,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Link } from "react-router-dom";
+
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -26,13 +23,13 @@ const Login = () => {
     margin: "20px auto",
   };
   const containerStyle = {
-    backgroundImage: "linear-gradient(to bottom, #4e54c8, #8f94fb)",
+    backgroundImage: "linear-gradient(to bottom, grey, black)",
     height: "100vh",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
   };
-  const avatarStyle = { backgroundColor: "#1bbd7e" };
+
   const btnstyle = { margin: "8px 0" };
   const navigate = useNavigate();
   const handleLogin = async () => {
@@ -48,7 +45,7 @@ const Login = () => {
         // Successful login
         console.log(data);
         localStorage.setItem("userID", data.data.userID);
-        const { role, accessToken } = data.data;
+        const { role } = data.data;
 
         if (role === "admin") {
           navigate("/admin"); // Change "/admin" to your admin page route

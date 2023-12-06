@@ -7,26 +7,32 @@ import {
   Grid,
   MenuItem,
   Box,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
 } from "@mui/material";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import MenuIcon from "@mui/icons-material/Menu";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { Link } from "react-router-dom";
-import Sidebaruser from "./Sidebaruser";
+
+import { styled } from "@mui/material/styles";
+
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Sidebaradmin from "./Sidebaradmin";
+import CustomAppBar from "./CustomAppBar";
 
 const formatDate = (date) => {
   const formattedDate = new Date(date);
   formattedDate.setHours(12, 0, 0, 0); // Set time to 12:00
   return formattedDate.toISOString().slice(0, -1);
 };
-
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 const Addtask = () => {
   const [formData, setFormData] = useState({
     taskName: "",
@@ -128,34 +134,20 @@ const Addtask = () => {
 
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 2,
-          paddingRight: 2,
-        }}
-      >
-        {/* Header */}
-        <IconButton
-          onClick={toggleDrawer(true)}
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ marginRight: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
+      <CustomAppBar
+        toggleDrawer={toggleDrawer}
+        handleLogout={handleLogout}
+        title="Add Tasks" // Pass the title as a prop
+      />
 
-        <IconButton onClick={handleLogout} color="inherit">
-          <LogoutIcon />
-        </IconButton>
-      </Box>
       <Container
         maxWidth="sm"
-        sx={{ border: "1px solid #ccc", borderRadius: "8px", padding: "20px" }}
+        sx={{
+          border: "1px solid #ccc",
+          borderRadius: "8px",
+          padding: "20px",
+          marginTop: "20px",
+        }}
       >
         <Box
           sx={{
@@ -165,8 +157,8 @@ const Addtask = () => {
             mb: 2,
           }}
         >
-          <Typography variant="h4" align="center" gutterBottom>
-            Add Task
+          <Typography variant="h6" align="center" gutterBottom>
+            Enter Your Task
           </Typography>
         </Box>
         <Sidebaradmin isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
@@ -228,7 +220,7 @@ const Addtask = () => {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={3}>
               <TextField
                 fullWidth
                 label="Hours Spent"
@@ -237,6 +229,18 @@ const Addtask = () => {
                 value={formData.hoursSpent}
                 onChange={handleChange}
               />
+            </Grid>
+            <Grid item xs={3}>
+              <Button
+                component="label"
+                variant="outlined"
+                startIcon={<CloudUploadIcon />}
+                size="small"
+                style={{ fontSize: "0.7rem" }}
+              >
+                Upload file
+                <VisuallyHiddenInput type="file" />
+              </Button>
             </Grid>
             <Grid item xs={12}>
               <Button
