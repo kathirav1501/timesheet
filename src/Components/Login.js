@@ -8,13 +8,17 @@ import {
   TextField,
   Button,
   Box,
+  Snackbar,
 } from "@mui/material";
-
+import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [openError, setOpenError] = useState(false);
 
   const paperStyle = {
     padding: 20,
@@ -23,7 +27,7 @@ const Login = () => {
     margin: "20px auto",
   };
   const containerStyle = {
-    backgroundImage: "linear-gradient(to bottom, grey, black)",
+    backgroundImage: "linear-gradient(to bottom, grey, white)",
     height: "100vh",
     display: "flex",
     justifyContent: "center",
@@ -32,7 +36,15 @@ const Login = () => {
 
   const btnstyle = { margin: "8px 0" };
   const navigate = useNavigate();
+
+  const handleCloseError = () => {
+    setOpenError(false);
+  };
+
   const handleLogin = async () => {
+    setLoading(true);
+    setError("");
+
     try {
       const response = await axios.post("https://localhost:44307/auth/Login", {
         username: username,
@@ -42,25 +54,27 @@ const Login = () => {
       const data = response.data;
 
       if (response.status === 200) {
-        // Successful login
         console.log(data);
         localStorage.setItem("userID", data.data.userID);
+        localStorage.setItem("role", data.data.role);
         const { role } = data.data;
 
         if (role === "admin") {
-          navigate("/admin"); // Change "/admin" to your admin page route
+          navigate("/admin");
         } else {
-          navigate("/user"); // Change "/user" to your user page route
+          navigate("/user");
         }
-        // You can store the accessToken in localStorage or state for further API requests
       } else {
-        // Handle unsuccessful login
         console.error("Login failed");
-        // Display error message or take appropriate action
+        setError("Login failed. Please try again.");
+        setOpenError(true);
       }
     } catch (error) {
       console.error("Error:", error);
-      // Handle network errors or other exceptions
+      setError("Network error occurred. Please try again.");
+      setOpenError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,7 +84,7 @@ const Login = () => {
         <Paper elevation={10} style={paperStyle}>
           <Grid align="center">
             <img
-              src="/logo-new.png"
+              src="/SmartPoint_AV_Logo.png"
               alt="Avatar"
               style={{ width: "60%", height: "80%" }}
             />
@@ -107,9 +121,19 @@ const Login = () => {
             style={btnstyle}
             fullWidth
             onClick={handleLogin}
+            disabled={loading}
           >
-            Sign in
+            {loading ? "Signing in..." : "Sign in"}
           </Button>
+          <Snackbar
+            open={openError}
+            autoHideDuration={6000}
+            onClose={handleCloseError}
+          >
+            <Alert onClose={handleCloseError} severity="error">
+              {error}
+            </Alert>
+          </Snackbar>
         </Paper>
       </Grid>
     </Box>

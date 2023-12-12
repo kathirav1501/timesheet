@@ -19,6 +19,7 @@ import * as XLSX from "xlsx";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import Sidebaradmin from "./Sidebaradmin";
 import CustomAppBar from "./CustomAppBar";
+import CombinedDrawer from "./CombinedDrawer";
 
 // ... StyledTableCell, StyledTableRow, TableContainerStyled, FilterContainer styles remain unchanged ...
 
@@ -114,14 +115,7 @@ function Admin() {
 
   return (
     <div>
-      <CustomAppBar
-        toggleDrawer={toggleDrawer}
-        handleLogout={handleLogout}
-        title="Resource Tasks" // Pass the title as a prop
-      />
-
-      {/* Sidebar */}
-      <Sidebaradmin isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
+      <CombinedDrawer Tittle="View All Resource Tasks" />
 
       <Box
         sx={{

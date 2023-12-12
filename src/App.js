@@ -7,6 +7,7 @@ import User from "./Components/User";
 import ViewTasks from "./Components/ViewTasks";
 import Addusers from "./Components/Addusers";
 import Addtask from "./Components/Addtask";
+import ProfilePage from "./Components/ProfilePage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/Viewtasks" element={<ViewTasks />} />
         <Route path="/Addusers" element={<Addusers />} />
         <Route path="/Addtask" element={<Addtask />} />
+        <Route path="/ProfilePage" element={<ProfilePage />} />
       </Routes>
     </Router>
   );

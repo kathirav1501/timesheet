@@ -16,6 +16,7 @@ import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Sidebaruser from "./Sidebaruser";
 import CustomAppBar from "./CustomAppBar";
+import CombinedDrawer from "./CombinedDrawer";
 
 const formatDate = (date) => {
   const formattedDate = new Date(date);
@@ -40,7 +41,7 @@ const User = () => {
     jiraID: "",
     jiraLink: "",
     projectID: "",
-    date: formatDate(new Date()), // Set default time to 12:00
+    TaskStartTime: formatDate(new Date()), // Set default time to 12:00
     hoursSpent: 0,
     userID: 0,
     projectOptions: [],
@@ -107,7 +108,7 @@ const User = () => {
         jiraID: "",
         jiraLink: "",
         projectID: "",
-        date: formatDate(new Date()), // Reset date to default 12:00
+        TaskStartTime: formatDate(new Date()), // Reset date to default 12:00
         hoursSpent: 0,
         userID: formData.userID,
         projectOptions: formData.projectOptions,
@@ -135,11 +136,12 @@ const User = () => {
 
   return (
     <>
-      <CustomAppBar
+      {/* <CustomAppBar
         toggleDrawer={toggleDrawer}
         handleLogout={handleLogout}
         title="Add Tasks" // Pass the title as a prop
-      />
+      /> */}
+      <CombinedDrawer Tittle="Add Tasks" />
       <Container
         maxWidth="sm"
         sx={{
@@ -194,7 +196,7 @@ const User = () => {
             <Grid item xs={6}>
               <TextField
                 fullWidth
-                label="Jira ID"
+                label="Board ID"
                 name="jiraID"
                 value={formData.jiraID}
                 onChange={handleChange}
@@ -203,7 +205,7 @@ const User = () => {
             <Grid item xs={6}>
               <TextField
                 fullWidth
-                label="Jira Link"
+                label="Board Link"
                 name="jiraLink"
                 value={formData.jiraLink}
                 onChange={handleChange}

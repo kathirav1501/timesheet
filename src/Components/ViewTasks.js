@@ -14,6 +14,7 @@ import axios from "axios";
 
 import Sidebaruser from "./Sidebaruser";
 import CustomAppBar from "./CustomAppBar";
+import CombinedDrawer from "./CombinedDrawer";
 
 const ViewTasks = () => {
   const [userTasks, setUserTasks] = useState([]);
@@ -79,12 +80,7 @@ const ViewTasks = () => {
   return (
     <>
       <Box display="flex" flexDirection="column" alignItems="center">
-        <CustomAppBar
-          toggleDrawer={toggleDrawer}
-          handleLogout={handleLogout}
-          title="View Tasks" // Pass the title as a prop
-        />
-        <Sidebaruser isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
+        <CombinedDrawer Tittle="View Your Tasks" />
 
         <Box width="80%" mt={4}>
           <TableContainer component={Paper}>

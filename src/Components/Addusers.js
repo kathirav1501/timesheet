@@ -17,6 +17,7 @@ import axios from "axios";
 
 import Sidebaradmin from "./Sidebaradmin";
 import CustomAppBar from "./CustomAppBar";
+import CombinedDrawer from "./CombinedDrawer";
 
 const Addusers = () => {
   const [username, setUsername] = useState("");
@@ -106,13 +107,7 @@ const Addusers = () => {
 
   return (
     <div>
-      <CustomAppBar
-        toggleDrawer={toggleDrawer}
-        handleLogout={handleLogout}
-        title="Create User" // Pass the title as a prop
-      />
-
-      <Sidebaradmin isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
+      <CombinedDrawer Tittle="Add Users" currentComponent={Addusers} />
 
       <Box
         sx={{

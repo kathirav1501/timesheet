@@ -16,6 +16,7 @@ import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Sidebaradmin from "./Sidebaradmin";
 import CustomAppBar from "./CustomAppBar";
+import CombinedDrawer from "./CombinedDrawer";
 
 const formatDate = (date) => {
   const formattedDate = new Date(date);
@@ -39,7 +40,7 @@ const Addtask = () => {
     jiraID: "",
     jiraLink: "",
     projectID: "",
-    date: formatDate(new Date()), // Set default time to 12:00
+    TaskStartTime: formatDate(new Date()), // Set default time to 12:00
     hoursSpent: 0,
     userID: 0,
     projectOptions: [],
@@ -106,7 +107,7 @@ const Addtask = () => {
         jiraID: "",
         jiraLink: "",
         projectID: "",
-        date: formatDate(new Date()), // Reset date to default 12:00
+        TaskStartTime: formatDate(new Date()), // Reset date to default 12:00
         hoursSpent: 0,
         userID: formData.userID,
         projectOptions: formData.projectOptions,
@@ -134,11 +135,7 @@ const Addtask = () => {
 
   return (
     <>
-      <CustomAppBar
-        toggleDrawer={toggleDrawer}
-        handleLogout={handleLogout}
-        title="Add Tasks" // Pass the title as a prop
-      />
+      <CombinedDrawer Tittle="Add Tasks" />
 
       <Container
         maxWidth="sm"
