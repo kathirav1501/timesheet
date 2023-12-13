@@ -15,10 +15,6 @@ import {
 import MuiAlert from "@mui/material/Alert";
 import axios from "axios";
 
-import Sidebaradmin from "./Sidebaradmin";
-import CustomAppBar from "./CustomAppBar";
-import CombinedDrawer from "./CombinedDrawer";
-
 const Addusers = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -107,7 +103,7 @@ const Addusers = () => {
 
   return (
     <div>
-      <CombinedDrawer Tittle="Add Users" currentComponent={Addusers} />
+      {/* <CombinedDrawer Tittle="Add Users" currentComponent={Addusers} /> */}
 
       <Box
         sx={{
@@ -126,21 +122,18 @@ const Addusers = () => {
         <Typography variant="h6" align="left" gutterBottom>
           Enter User Details
         </Typography>
-        <Grid container spacing={3.5}>
-          <Grid item xs={10} sm={6}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
             <TextField
-              label="Username"
+              label="User name"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               fullWidth
               size="small"
-              InputProps={{
-                style: { backgroundColor: "#fff" },
-              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth size="small">
+            <FormControl label="Board Link" fullWidth size="small">
               <InputLabel>Role</InputLabel>
               <Select value={roleID} onChange={handleRoleChange}>
                 <MenuItem value={1}>Admin</MenuItem>
@@ -198,7 +191,7 @@ const Addusers = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={8}>
             <Button
               variant="contained"
               onClick={handleCreateUser}

@@ -27,11 +27,14 @@ const Login = () => {
     margin: "20px auto",
   };
   const containerStyle = {
-    backgroundImage: "linear-gradient(to bottom, grey, white)",
+    //  backgroundImage: `url('backdrop.jpg')`, // Replace 'path_to_your_image.jpg' with the actual path to your image
+    backgroundSize: "cover",
+    backgroundPosition: "center",
     height: "100vh",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
   };
 
   const btnstyle = { margin: "8px 0" };
@@ -62,7 +65,7 @@ const Login = () => {
         if (role === "admin") {
           navigate("/admin");
         } else {
-          navigate("/user");
+          navigate("/Addtask");
         }
       } else {
         console.error("Login failed");

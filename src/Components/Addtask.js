@@ -14,9 +14,6 @@ import { toast, ToastContainer } from "react-toastify";
 import { styled } from "@mui/material/styles";
 
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import Sidebaradmin from "./Sidebaradmin";
-import CustomAppBar from "./CustomAppBar";
-import CombinedDrawer from "./CombinedDrawer";
 
 const formatDate = (date) => {
   const formattedDate = new Date(date);
@@ -135,8 +132,6 @@ const Addtask = () => {
 
   return (
     <>
-      <CombinedDrawer Tittle="Add Tasks" />
-
       <Container
         maxWidth="sm"
         sx={{
@@ -144,6 +139,7 @@ const Addtask = () => {
           borderRadius: "8px",
           padding: "20px",
           marginTop: "20px",
+          background: "white",
         }}
       >
         <Box
@@ -158,7 +154,7 @@ const Addtask = () => {
             Enter Your Task
           </Typography>
         </Box>
-        <Sidebaradmin isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
+
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -169,6 +165,7 @@ const Addtask = () => {
                 select
                 value={formData.projectID}
                 onChange={handleChange}
+                size="small"
               >
                 {formData.projectOptions.map((project) => (
                   <MenuItem key={project.projectID} value={project.projectID}>
@@ -186,35 +183,38 @@ const Addtask = () => {
                 name="taskName"
                 value={formData.taskName}
                 onChange={handleChange}
+                size="small"
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
                 fullWidth
-                label="Jira ID"
+                label="Board ID"
                 name="jiraID"
                 value={formData.jiraID}
                 onChange={handleChange}
+                size="small"
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
                 fullWidth
-                label="Jira Link"
+                label="Board Link"
                 name="jiraLink"
                 value={formData.jiraLink}
                 onChange={handleChange}
+                size="small"
               />
             </Grid>
 
             <Grid item xs={6}>
               <TextField
                 fullWidth
-                label="Date"
                 name="date"
                 type="date"
                 value={formData.date}
                 onChange={handleChange}
+                size="small"
               />
             </Grid>
             <Grid item xs={3}>
@@ -225,6 +225,7 @@ const Addtask = () => {
                 type="number"
                 value={formData.hoursSpent}
                 onChange={handleChange}
+                size="small"
               />
             </Grid>
             <Grid item xs={3}>

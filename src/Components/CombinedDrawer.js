@@ -21,7 +21,7 @@ import LogoutIcon from "@mui/icons-material/ExitToApp";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import { Link } from "react-router-dom";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { Menu, MenuItem, Tooltip } from "@mui/material";
 
 const drawerWidth = 240;
@@ -63,6 +63,12 @@ const AppBar = styled(MuiAppBar, {
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: "nowrap",
+    boxSizing: "border-box",
+    backgroundColor: "black", // Change the color and opacity here
+    backdropFilter: "blur(10px)",
   }),
   ...(open && {
     marginLeft: drawerWidth,
@@ -70,6 +76,12 @@ const AppBar = styled(MuiAppBar, {
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
+      width: drawerWidth,
+      flexShrink: 0,
+      whiteSpace: "nowrap",
+      boxSizing: "border-box",
+      backgroundColor: "black", // Change the color and opacity here
+      backdropFilter: "blur(10px)",
     }),
   }),
 }));
@@ -91,11 +103,10 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function CombinedDrawer({ Tittle, currentComponent }) {
+export default function CombinedDrawer({ Tittle, currentComponent, routes }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null); // For account menu
-  const [logoutAnchorEl, setLogoutAnchorEl] = React.useState(null); // For logout menu
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -110,13 +121,8 @@ export default function CombinedDrawer({ Tittle, currentComponent }) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleLogoutMenu = (event) => {
-    setLogoutAnchorEl(event.currentTarget);
-  };
-
   const handleClose = () => {
     setAnchorEl(null);
-    setLogoutAnchorEl(null);
   };
 
   const handleDrawerClose = () => {
@@ -138,31 +144,36 @@ export default function CombinedDrawer({ Tittle, currentComponent }) {
       { text: "View Tasks", icon: <AssignmentIcon />, route: "/Viewtasks" },
     ];
   }
+  const location = useLocation();
+
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", background: "#ff5f5" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+      <AppBar position="absolute" open={open}>
+        <Toolbar
+          sx={{
+            display: "-ms-grid",
+
+            justifyContent: "space-between",
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
-              marginRight: 5,
+              marginRight: 1,
               ...(open && { display: "none" }),
             }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            style={{ paddingLeft: 100 }}
-          >
-            {Tittle}
+          <Typography variant="h6" noWrap component="div" style={{}}>
+            {routes.find((route) => route.path === window.location.pathname)
+              ?.title || "Default Title"}
           </Typography>
+
           <div>
             <IconButton
               aria-label="account of current user"
@@ -188,7 +199,9 @@ export default function CombinedDrawer({ Tittle, currentComponent }) {
               }}
               getContentAnchorEl={null}
             >
-              <MenuItem onClick={handleClose}>View Profile</MenuItem>
+              <MenuItem component={Link} to="/Account" onClick={handleClose}>
+                View Profile
+              </MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>
@@ -210,53 +223,55 @@ export default function CombinedDrawer({ Tittle, currentComponent }) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List sx={{ marginTop: "2px" }}>
           {sidebarItems.map((item, index) => (
             <Link
               key={item.text}
               to={item.route}
               style={{ textDecoration: "none", color: "inherit" }}
             >
-              <ListItem
-                button
-                disablePadding
-                sx={{
-                  display: "block",
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemButton
+              <Tooltip title={item.text} placement="right">
+                <ListItem
+                  button
+                  disablePadding
+                  selected={location.pathname === item.route}
                   sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    px: 2,
+                    py: 0.8,
+                    borderRadius: "13px",
+                    "&:hover": {
+                      backgroundColor: "rgba(1, 0, 9, 0.1)",
+                    },
                   }}
                 >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {item.icon}
-                  </ListItemIcon>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText
                     primary={item.text}
-                    sx={{ opacity: open ? 1 : 0 }}
+                    sx={{ opacity: open ? 1 : 0, marginLeft: "10px" }}
                   />
-                </ListItemButton>
-              </ListItem>
+                </ListItem>
+              </Tooltip>
             </Link>
           ))}
         </List>
-
         {/* Other sections of the drawer */}
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+
+      <Box
+        component="main"
+        sx={{ flexGrow: 100, p: 2, marginBottom: 100 }}
+        style={{}}
+      >
         <DrawerHeader />
-        <currentComponent />
+
+        <Routes>
+          {routes.map((route, index) => (
+            <Route key={index} path={route.path} element={route.element} />
+          ))}
+        </Routes>
       </Box>
     </Box>
   );

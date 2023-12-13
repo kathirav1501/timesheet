@@ -17,9 +17,6 @@ import {
 
 import * as XLSX from "xlsx";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import Sidebaradmin from "./Sidebaradmin";
-import CustomAppBar from "./CustomAppBar";
-import CombinedDrawer from "./CombinedDrawer";
 
 // ... StyledTableCell, StyledTableRow, TableContainerStyled, FilterContainer styles remain unchanged ...
 
@@ -115,8 +112,6 @@ function Admin() {
 
   return (
     <div>
-      <CombinedDrawer Tittle="View All Resource Tasks" />
-
       <Box
         sx={{
           padding: 2,
@@ -142,7 +137,12 @@ function Admin() {
             value={resourceFilter}
             onChange={handleResourceFilterChange}
             variant="outlined"
-            style={{ marginBottom: "2rem", width: "22%", marginLeft: "50px" }}
+            style={{
+              marginBottom: "2rem",
+              width: "22%",
+              marginLeft: "50px",
+              color: "yellow",
+            }}
             size="small"
           >
             {getResourceNames().map((name) => (

@@ -12,10 +12,6 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-import Sidebaruser from "./Sidebaruser";
-import CustomAppBar from "./CustomAppBar";
-import CombinedDrawer from "./CombinedDrawer";
-
 const ViewTasks = () => {
   const [userTasks, setUserTasks] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -80,8 +76,6 @@ const ViewTasks = () => {
   return (
     <>
       <Box display="flex" flexDirection="column" alignItems="center">
-        <CombinedDrawer Tittle="View Your Tasks" />
-
         <Box width="80%" mt={4}>
           <TableContainer component={Paper}>
             <Table size="small">

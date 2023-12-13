@@ -14,9 +14,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import Sidebaruser from "./Sidebaruser";
-import CustomAppBar from "./CustomAppBar";
-import CombinedDrawer from "./CombinedDrawer";
 
 const formatDate = (date) => {
   const formattedDate = new Date(date);
@@ -141,7 +138,7 @@ const User = () => {
         handleLogout={handleLogout}
         title="Add Tasks" // Pass the title as a prop
       /> */}
-      <CombinedDrawer Tittle="Add Tasks" />
+
       <Container
         maxWidth="sm"
         sx={{
@@ -163,7 +160,7 @@ const User = () => {
             Enter Your Task
           </Typography>
         </Box>
-        <Sidebaruser isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
+
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -215,7 +212,6 @@ const User = () => {
             <Grid item xs={6}>
               <TextField
                 fullWidth
-                label="Date"
                 name="date"
                 type="date"
                 value={formData.date}
