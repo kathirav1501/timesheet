@@ -13,11 +13,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
+
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LogoutIcon from "@mui/icons-material/ExitToApp";
+
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
@@ -67,7 +67,7 @@ const AppBar = styled(MuiAppBar, {
     flexShrink: 0,
     whiteSpace: "nowrap",
     boxSizing: "border-box",
-    backgroundColor: "black", // Change the color and opacity here
+    //  backgroundColor: "black", // Change the color and opacity here
     backdropFilter: "blur(10px)",
   }),
   ...(open && {
@@ -80,7 +80,7 @@ const AppBar = styled(MuiAppBar, {
       flexShrink: 0,
       whiteSpace: "nowrap",
       boxSizing: "border-box",
-      backgroundColor: "black", // Change the color and opacity here
+      //    backgroundColor: "black", // Change the color and opacity here
       backdropFilter: "blur(10px)",
     }),
   }),
@@ -93,13 +93,35 @@ const Drawer = styled(MuiDrawer, {
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
+  "& .MuiDrawer-paper": {
+    backgroundColor: "rgba(255, 255, 255, 0.9)", // Change the color to white with opacity
+    backdropFilter: open ? "blur(10px)" : "none", // Add backdrop filter when the drawer is open
+  },
+  boxShadow: "3px 0px 10px 0px rgba(0,0,0,0.3)", // Subtle shadow for depth
+
   ...(open && {
     ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    "& .MuiDrawer-paper": {
+      ...openedMixin(theme),
+      backgroundColor: "rgba(255, 255, 255, 0.9)", // Change the color to white with opacity
+      backdropFilter: "blur(10px)", // Add backdrop filter when the drawer is open
+    },
   }),
   ...(!open && {
     ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    "& .MuiDrawer-paper": {
+      ...closedMixin(theme),
+      backgroundColor: "rgba(255, 255, 255, 0.9)", // Change the color to white with opacity
+      backdropFilter: "none", // Remove backdrop filter when the drawer is closed
+    },
   }),
 }));
 
@@ -239,18 +261,26 @@ export default function CombinedDrawer({ Tittle, currentComponent, routes }) {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "flex-start",
-                    px: 2,
-                    py: 0.8,
-                    borderRadius: "13px",
+                    px: 2.5,
+                    py: 0.6,
+                    borderRadius: "18px",
                     "&:hover": {
-                      backgroundColor: "rgba(1, 0, 9, 0.1)",
+                      backgroundColor: "#A2D2DF", // Hover background color
                     },
                   }}
                 >
-                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemIcon sx={{ color: "#3498db" }}>
+                    {item.icon}
+                  </ListItemIcon>{" "}
+                  {/* Icon color */}
                   <ListItemText
                     primary={item.text}
-                    sx={{ opacity: open ? 1 : 0, marginLeft: "10px" }}
+                    sx={{
+                      opacity: open ? 10 : 0,
+                      marginLeft: "10px",
+                      color: "black",
+                      fontWeight: "Bold", // Bold text// Text color
+                    }}
                   />
                 </ListItem>
               </Tooltip>
@@ -258,11 +288,13 @@ export default function CombinedDrawer({ Tittle, currentComponent, routes }) {
           ))}
         </List>
         {/* Other sections of the drawer */}
+
+        {/* Other sections of the drawer */}
       </Drawer>
 
       <Box
         component="main"
-        sx={{ flexGrow: 100, p: 2, marginBottom: 100 }}
+        sx={{ flexGrow: 1, p: 2, marginBottom: 10 }}
         style={{}}
       >
         <DrawerHeader />

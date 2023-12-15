@@ -52,7 +52,7 @@ export const Profile = () => {
   }, []);
 
   return (
-    <Card>
+    <Card variant="elevation" elevation={10}>
       <CardContent>
         <Box
           sx={{

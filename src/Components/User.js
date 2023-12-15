@@ -44,8 +44,6 @@ const User = () => {
     projectOptions: [],
   });
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
   useEffect(() => {
     const userIDFromStorage = localStorage.getItem("userID");
     if (userIDFromStorage) {
@@ -116,29 +114,8 @@ const User = () => {
     }
   };
 
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setIsDrawerOpen(open);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("userID");
-    window.location.href = "/login";
-  };
-
   return (
     <>
-      {/* <CustomAppBar
-        toggleDrawer={toggleDrawer}
-        handleLogout={handleLogout}
-        title="Add Tasks" // Pass the title as a prop
-      /> */}
-
       <Container
         maxWidth="sm"
         sx={{

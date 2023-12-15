@@ -6,15 +6,13 @@ import {
   CardContent,
   Typography,
   Divider,
-  IconButton,
 } from "@mui/material";
-import { CheckCircleOutline } from "@mui/icons-material"; // Import the icon for online status
+
 import axios from "axios";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
-  const [onlineStatus, setOnlineStatus] = useState(false); // State for online status
 
   useEffect(() => {
     // Retrieve userID from localStorage or any other source
@@ -29,9 +27,6 @@ const ProfilePage = () => {
 
         const userData = response.data.data[0];
         setUserData(userData);
-
-        // Assuming online status is retrieved along with user data
-        setOnlineStatus(userData.active); // Set online status based on 'active' property
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -43,36 +38,30 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh", // Fill the entire screen height
-        background: "#f0f0f0", // Placeholder background color
-        padding: "0 20px", // Add padding to the main container
-      }}
+    <Card
+      variant="elevation"
+      elevation={10}
+      sx={{ width: "80%", maxWidth: 800, padding: "20px" }}
     >
-      <Card sx={{ width: "80%", maxWidth: 800, padding: "20px" }}>
-        {" "}
-        {/* Adjusted width of the card */}
-        <CardContent>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              marginBottom: 3,
-              position: "relative",
-            }}
-          >
-            <Avatar sx={{ width: 120, height: 120 }}>
-              {" "}
-              <AccountCircleIcon sx={{ width: 120, height: 120 }} />
-              {/* Larger avatar */}
-              {/* Add your avatar content here */}
-            </Avatar>
-            {/* Display the online status indicator */}
-            {/* {onlineStatus && (
+      {" "}
+      {/* Adjusted width of the card */}
+      <CardContent>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: 3,
+            position: "relative",
+          }}
+        >
+          <Avatar sx={{ width: 120, height: 120 }}>
+            {" "}
+            <AccountCircleIcon sx={{ width: 120, height: 120 }} />
+            {/* Larger avatar */}
+            {/* Add your avatar content here */}
+          </Avatar>
+          {/* Display the online status indicator */}
+          {/* {onlineStatus && (
               <IconButton
                 sx={{
                   position: "absolute",
@@ -86,35 +75,34 @@ const ProfilePage = () => {
                 Larger icon
               </IconButton>
             )} */}
-          </Box>
-          {userData && (
-            <>
-              <Typography
-                variant="h4"
-                component="div"
-                align="center"
-                gutterBottom
-                sx={{ fontWeight: 600 }}
-              >
-                {userData.userName}
+        </Box>
+        {userData && (
+          <>
+            <Typography
+              variant="h4"
+              component="div"
+              align="center"
+              gutterBottom
+              sx={{ fontWeight: 600 }}
+            >
+              {userData.userName}
+            </Typography>
+            <Divider />
+            <Box sx={{ mt: 3 }}>
+              <Typography variant="body1">
+                <strong>Email:</strong> {userData.email}
               </Typography>
-              <Divider />
-              <Box sx={{ mt: 3 }}>
-                <Typography variant="body1">
-                  <strong>Email:</strong> {userData.email}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Role:</strong> {userData.role.roleName}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Active:</strong> {userData.active ? "Yes" : "No"}
-                </Typography>
-              </Box>
-            </>
-          )}
-        </CardContent>
-      </Card>
-    </Box>
+              <Typography variant="body1">
+                <strong>Role:</strong> {userData.role.roleName}
+              </Typography>
+              <Typography variant="body1">
+                <strong>Active:</strong> {userData.active ? "Yes" : "No"}
+              </Typography>
+            </Box>
+          </>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 

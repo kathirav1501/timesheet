@@ -39,7 +39,7 @@ export const AccountProfile = () => {
   }, []);
 
   return (
-    <Card>
+    <Card variant="elevation" elevation={10}>
       <CardContent>
         {userData && (
           <Box

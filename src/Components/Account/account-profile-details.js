@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import {
-  Box,
   Card,
   CardActions,
   CardContent,
@@ -52,7 +51,7 @@ export const AccountProfileDetails = () => {
   }, []);
 
   return (
-    <Card>
+    <Card variant="elevation" elevation={10}>
       <CardHeader subheader="PERSONAL DETAILS" />
       <CardContent sx={{ pt: 0 }}>
         <Grid container spacing={5}>
@@ -68,6 +67,7 @@ export const AccountProfileDetails = () => {
             <Typography variant="body1">Email:</Typography>
             <Typography variant="body1">{userDetails.email}</Typography>
           </Grid>
+          <Divider />
           <Grid item xs={12} md={6}>
             <Typography variant="body1">Role</Typography>
             <Typography variant="body1">{userDetails.role.roleName}</Typography>

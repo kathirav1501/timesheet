@@ -13,6 +13,8 @@ import {
   Button,
   TablePagination,
   MenuItem,
+  Card,
+  CardContent,
 } from "@mui/material";
 
 import * as XLSX from "xlsx";
@@ -26,7 +28,7 @@ function Admin() {
   const [filter] = useState("");
   const [resourceFilter, setResourceFilter] = useState(""); // New state for resource filter
   const [currentPage, setCurrentPage] = useState(0);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
@@ -70,23 +72,6 @@ function Admin() {
     setCurrentPage(0);
   };
 
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setIsDrawerOpen(open);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("userID");
-    // Redirect to logout or login page
-
-    window.location.href = "/login";
-  };
-
   const exportToExcel = () => {
     const dataForExport = filteredData
       .map((user) =>
@@ -125,107 +110,133 @@ function Admin() {
         {/* Table */}
         <Box
           sx={{
-            width: "100%",
-            maxWidth: "80%",
-            margin: "auto",
-            marginTop: 2,
+            width: "200%",
+            maxWidth: "100%",
+            margin: "1%",
+            marginTop: -3,
           }}
         >
-          <TextField
-            select
-            label="Filter by Resource Name"
-            value={resourceFilter}
-            onChange={handleResourceFilterChange}
-            variant="outlined"
-            style={{
-              marginBottom: "2rem",
-              width: "22%",
-              marginLeft: "50px",
-              color: "yellow",
-            }}
-            size="small"
+          <Card
+            variant="elevation"
+            elevation={5}
+            sx={{ maxWidth: "85%", margin: "auto", marginTop: 3 }}
           >
-            {getResourceNames().map((name) => (
-              <MenuItem key={name} value={name}>
-                {name}
-              </MenuItem>
-            ))}
-          </TextField>
-          <Button
-            size="small"
-            variant="outlined"
-            style={{ left: "53%" }}
-            onClick={exportToExcel}
-          >
-            <FileDownloadIcon /> Export to Excel
-          </Button>
-          <TableContainer
-            component={Paper}
-            sx={{ maxWidth: "90%", margin: "auto" }}
-          >
-            <Table size="small">
-              <TableHead>
-                <TableRow
-                  style={{ backgroundColor: "darkgrey", color: "white" }}
-                >
-                  <TableCell
-                    sx={{ width: "15%", fontSize: "0.8rem", padding: "8px" }}
-                  >
-                    Resource Name
-                  </TableCell>
-                  <TableCell
-                    sx={{ width: "10%", fontSize: "0.8rem", padding: "8px" }}
-                  >
-                    Date
-                  </TableCell>
-                  <TableCell
-                    sx={{ width: "15%", fontSize: "0.8rem", padding: "8px" }}
-                  >
-                    Project
-                  </TableCell>
-                  <TableCell sx={{ fontSize: "0.8rem", padding: "8px" }}>
-                    Task
-                  </TableCell>
-                  <TableCell
-                    sx={{ width: "10%", fontSize: "0.8rem", padding: "8px" }}
-                  >
-                    Hours
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {/* Table Rows */}
-                {currentRows.map((user, index) =>
-                  user.tasks.map((task, taskIndex) => (
-                    <TableRow key={`${index}-${taskIndex}`}>
-                      <TableCell>{user.userName}</TableCell>
-                      <TableCell>
-                        {new Date(task.date).toLocaleDateString()}
+            <CardContent>
+              <TextField
+                select
+                label="Filter by Resource Name"
+                value={resourceFilter}
+                onChange={handleResourceFilterChange}
+                variant="outlined"
+                style={{
+                  marginBottom: "1rem",
+                  width: "22%",
+                  marginLeft: "40px",
+                  color: "yellow",
+                }}
+                size="small"
+              >
+                {getResourceNames().map((name) => (
+                  <MenuItem key={name} value={name}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <Button
+                size="small"
+                variant="outlined"
+                style={{ left: "53%" }}
+                onClick={exportToExcel}
+              >
+                <FileDownloadIcon /> Export to Excel
+              </Button>
+              <TableContainer
+                component={Paper}
+                sx={{ maxWidth: "90%", margin: "auto" }}
+              >
+                <Table size="small">
+                  <TableHead>
+                    <TableRow
+                      style={{ backgroundColor: "darkgrey", color: "white" }}
+                    >
+                      <TableCell
+                        sx={{
+                          width: "15%",
+                          fontSize: "0.8rem",
+                          padding: "8px",
+                        }}
+                      >
+                        Resource Name
                       </TableCell>
-                      <TableCell>{task.project.projectName}</TableCell>
-                      <TableCell>{task.taskName}</TableCell>
-                      <TableCell>{task.hoursSpent}</TableCell>
+                      <TableCell
+                        sx={{
+                          width: "10%",
+                          fontSize: "0.8rem",
+                          padding: "8px",
+                        }}
+                      >
+                        Date
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          width: "15%",
+                          fontSize: "0.8rem",
+                          padding: "8px",
+                        }}
+                      >
+                        Project
+                      </TableCell>
+                      <TableCell sx={{ fontSize: "0.8rem", padding: "8px" }}>
+                        Task
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          width: "10%",
+                          fontSize: "0.8rem",
+                          padding: "8px",
+                        }}
+                      >
+                        Hours
+                      </TableCell>
                     </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {/* Table Rows */}
+                    {currentRows.map((user, index) =>
+                      user.tasks.map((task, taskIndex) => (
+                        <TableRow key={`${index}-${taskIndex}`}>
+                          <TableCell>{user.userName}</TableCell>
+                          <TableCell>
+                            {new Date(task.date).toLocaleDateString()}
+                          </TableCell>
+                          <TableCell>{task.project.projectName}</TableCell>
+                          <TableCell>{task.taskName}</TableCell>
+                          <TableCell>{task.hoursSpent}</TableCell>
+                        </TableRow>
+                      ))
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
 
-          {/* Pagination */}
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={filteredData.length}
-            rowsPerPage={rowsPerPage}
-            page={currentPage}
-            onPageChange={(e, newPage) => setCurrentPage(newPage)}
-            onRowsPerPageChange={(e) => {
-              setRowsPerPage(parseInt(e.target.value, 10));
-              setCurrentPage(0);
-            }}
-            style={{ margin: "auto", marginTop: 2 }}
-          />
+              {/* Pagination */}
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={filteredData.length}
+                rowsPerPage={rowsPerPage}
+                page={Math.floor(
+                  (currentPage * rowsPerPage) / currentRows.length
+                )} // Update this line
+                onPageChange={(e, newPage) => setCurrentPage(newPage)}
+                onRowsPerPageChange={(e) => {
+                  setRowsPerPage(parseInt(e.target.value, 10));
+                  setCurrentPage(0);
+                }}
+                style={{ margin: "auto", marginTop: 2 }}
+              />
+            </CardContent>
+          </Card>
         </Box>
       </Box>
     </div>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  Box,
   Table,
   TableContainer,
   TableHead,
@@ -9,12 +8,14 @@ import {
   TableCell,
   Paper,
   TablePagination,
+  Card,
+  CardContent,
 } from "@mui/material";
 import axios from "axios";
 
 const ViewTasks = () => {
   const [userTasks, setUserTasks] = useState([]);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const [userID, setUserID] = useState(0); // State to store the user ID
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5); // Number of rows per page
@@ -50,24 +51,6 @@ const ViewTasks = () => {
     }
   }, [userID]);
 
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setIsDrawerOpen(open);
-  };
-
-  const handleLogout = () => {
-    // Implement your logout logic here
-    // For example:
-    localStorage.removeItem("userID");
-    // Redirect to logout or login page
-    window.location.href = "/login";
-  };
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString(); // Adjust date format as needed
@@ -75,8 +58,12 @@ const ViewTasks = () => {
 
   return (
     <>
-      <Box display="flex" flexDirection="column" alignItems="center">
-        <Box width="80%" mt={4}>
+      <Card
+        variant="elevation"
+        elevation={5}
+        sx={{ maxWidth: "100%", margin: "auto", marginTop: 2 }}
+      >
+        <CardContent>
           <TableContainer component={Paper}>
             <Table size="small">
               <TableHead>
@@ -117,8 +104,8 @@ const ViewTasks = () => {
               setPage(0);
             }}
           />
-        </Box>
-      </Box>
+        </CardContent>
+      </Card>
     </>
   );
 };
